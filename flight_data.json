@@ -1,0 +1,274 @@
+[
+    {
+        "id": 0,
+        "type": 2,
+        "text": "Hello! I'm your Flight Assistant. How can I help you today?",
+        "transition_list": [
+            {
+                "condition_text": "Book a new flight",
+                "next_node_id": 1
+            },
+            {
+                "condition_text": "Check flight information",
+                "next_node_id": 2
+            },
+            {
+                "condition_text": "Change or cancel flight",
+                "next_node_id": 3
+            },
+            {
+                "condition_text": "Get travel planning help",
+                "next_node_id": 4
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "type": 1,
+        "text": "Let's book your flight. May I have your full name and desired travel date?",
+        "transition_list": [
+            {
+                "condition_text": "User provides name and date",
+                "next_node_id": 5
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "type": 1,
+        "text": "To check your flight details, please provide your flight number.",
+        "transition_list": [
+            {
+                "condition_text": "User provides flight number",
+                "next_node_id": 6
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "type": 1,
+        "text": "Would you like to change or cancel your existing flight?",
+        "transition_list": [
+            {
+                "condition_text": "Change flight",
+                "next_node_id": 7
+            },
+            {
+                "condition_text": "Cancel flight",
+                "next_node_id": 8
+            },
+            {
+                "condition_text": "Speak to agent",
+                "next_node_id": 9
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "type": 1,
+        "text": "For travel planning, please tell me your destination and travel dates.",
+        "transition_list": [
+            {
+                "condition_text": "User provides details",
+                "next_node_id": 10
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "type": 3,
+        "function": {
+            "name": "book_flight",
+            "parameters": [
+                {
+                    "type": "string",
+                    "parameter_name": "passenger_name"
+                },
+                {
+                    "type": "string",
+                    "parameter_name": "travel_date"
+                }
+            ]
+        },
+        "transition_list": [
+            {
+                "condition_text": "Booking successful",
+                "next_node_id": 11
+            },
+            {
+                "condition_text": "Booking failed",
+                "next_node_id": 12
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "type": 3,
+        "function": {
+            "name": "check_flight_status",
+            "parameters": [
+                {
+                    "type": "string",
+                    "parameter_name": "flight_number"
+                }
+            ]
+        },
+        "transition_list": [
+            {
+                "condition_text": "Flight found",
+                "next_node_id": 13
+            },
+            {
+                "condition_text": "Flight not found",
+                "next_node_id": 14
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "type": 1,
+        "text": "Please provide your current flight number and new travel details.",
+        "transition_list": [
+            {
+                "condition_text": "User provides details",
+                "next_node_id": 15
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "type": 1,
+        "text": "Please confirm you want to cancel your flight by providing your flight number.",
+        "transition_list": [
+            {
+                "condition_text": "User confirms cancellation",
+                "next_node_id": 16
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "type": 3,
+        "function": {
+            "name": "transfer_to_agent"
+        },
+        "transition_list": []
+    },
+    {
+        "id": 10,
+        "type": 3,
+        "function": {
+            "name": "provide_travel_advice",
+            "parameters": [
+                {
+                    "type": "string",
+                    "parameter_name": "destination"
+                },
+                {
+                    "type": "string",
+                    "parameter_name": "travel_dates"
+                }
+            ]
+        },
+        "transition_list": [
+            {
+                "condition_text": "Advice provided",
+                "next_node_id": 17
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "type": 2,
+        "text": "Your flight has been booked successfully! Confirmation details will be sent to your email.",
+        "transition_list": []
+    },
+    {
+        "id": 12,
+        "type": 2,
+        "text": "Sorry, we couldn't complete your booking. Would you like to try different dates?",
+        "transition_list": [
+            {
+                "condition_text": "Retry booking",
+                "next_node_id": 1
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "type": 2,
+        "text": "Here are your flight details: [FLIGHT_DETAILS]. Is there anything else I can help with?",
+        "transition_list": []
+    },
+    {
+        "id": 14,
+        "type": 2,
+        "text": "We couldn't find your flight. Please verify your flight number.",
+        "transition_list": [
+            {
+                "condition_text": "Try again",
+                "next_node_id": 2
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "type": 3,
+        "function": {
+            "name": "change_flight",
+            "parameters": [
+                {
+                    "type": "string",
+                    "parameter_name": "flight_number"
+                },
+                {
+                    "type": "string",
+                    "parameter_name": "new_details"
+                }
+            ]
+        },
+        "transition_list": [
+            {
+                "condition_text": "Change successful",
+                "next_node_id": 18
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "type": 3,
+        "function": {
+            "name": "cancel_flight",
+            "parameters": [
+                {
+                    "type": "string",
+                    "parameter_name": "flight_number"
+                }
+            ]
+        },
+        "transition_list": [
+            {
+                "condition_text": "Cancellation complete",
+                "next_node_id": 19
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "type": 2,
+        "text": "Based on your destination, I recommend [TRAVEL_ADVICE]. Safe travels!",
+        "transition_list": []
+    },
+    {
+        "id": 18,
+        "type": 2,
+        "text": "Your flight has been successfully changed. New details will be sent to your email.",
+        "transition_list": []
+    },
+    {
+        "id": 19,
+        "type": 2,
+        "text": "Your flight has been cancelled. A refund will be processed within 5-7 business days.",
+        "transition_list": []
+    }
+]
